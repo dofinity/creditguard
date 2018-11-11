@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/a129f7c59d8ec641af79/maintainability)](https://codeclimate.com/github/dofinity/Creditguard/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2f80d58cecaca809ed68/maintainability)](https://codeclimate.com/github/dofinity/creditguard/maintainability)
 
 # CreditGuard
 A lightweight PHP helper library for integrating CreditGuard API payments.

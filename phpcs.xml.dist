@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="dofinity">
+  <description>Default PHP CodeSniffer configuration for Rules.</description>
+  <file>.</file>
+
+  <arg name="extensions" value="php,inc,test"/>
+  <arg name="warning-severity" value="0"/>
+
+</ruleset>

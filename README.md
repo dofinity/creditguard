@@ -3,43 +3,35 @@
 # CreditGuard
 A lightweight PHP helper library for integrating CreditGuard API payments.
 
-## Installation with Composer
+## Installation
+### Install the library via Composer
 ```shell
 $ composer require dofinity/creditguard:dev-master
 ```
+### Copy the provided `/wsdl_template` files to `/wdsl`
+Change wdsl url in `/wsdl/RelayService.php` line 29
+
+### Generating CG Classes via WSDL
+For now the library comes with a pre-generated CG classes, generated from our demo endpoint.
+If your terminal provides a different classes that are customized for your specific needs, you will to generate the classes again
+using `wsdl2phpgenerator` which is already defined as a dev dependency under our composer.json.
+
+```shell
+$ composer install --dev
+   ```
+
+Then execute `generateWsdl.php?wsdl_path=https%3A%2F%2Fxxx.creditguard.co.il%2Fxpo%2Fservices%2FRelay%3Fwsdl` and you should now see the updated classes in your `/wsdl` directory.
+
+Note that the URL must be encoded for that to work.
+
+### Security considerations and tweaks
+- Make sure that wsdlGenerate.php is read only on production environment (400)
+- Don't use `composer install --dev` on non development environments
 
 ## Basic usage
 
 ### Payment page setup
-```php
-require __DIR__ . '/vendor/autoload.php';
-
-// change terminal, user and password to real credentials
-$terminal = '0123456';
-$user = 'user';
-$password = 'password';
-
-// change to your own callback url
-$GoodURL = 'http://yourdomain/callback.php';
-$Total = 100;
-
-// PaymentRequest accepts a lot of params, but in this case we use only required ones
-$PaymentRequest = new \Creditguard\PaymentRequest(
-    $terminal, $user, $password, $GoodURL, $Total
-);
-
-$payment = new \Creditguard\CreditguardPayment();
-$payment->setPaymentRequest($PaymentRequest);
-$result = $payment->SubmitPaymentRequest();
-$resultJson = json_decode($result, true);
-
-$URL = $resultJson['URL'];
-$ConfirmationKey = $resultJson['ConfirmationKey'];
-$Error = $resultJson['Error'];
-
-// redirect to payment page
-header("Location: {$URL}");
-```
+`examples/newTransactionRedirectUrl.php`
 
 ### Payment validation
 ```php

@@ -5,6 +5,10 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
   protected $description;
   protected $total;
 
+  protected $successUrl = "";
+  protected $errorUrl = "";
+  protected $cancelUrl = "";
+
   protected $uniqueid;
 
   protected $doDealResponse;
@@ -51,6 +55,33 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
   public function setTotal($total)
   {
     $this->total = $total;
+    return $this;
+  }
+
+  /**
+   * @param mixed $successUrl
+   */
+  public function setSuccessUrl($successUrl)
+  {
+    $this->successUrl = $successUrl;
+    return $this;
+  }
+
+  /**
+   * @param mixed $errorUrl
+   */
+  public function setErrorUrl($errorUrl)
+  {
+    $this->errorUrl = $errorUrl;
+    return $this;
+  }
+
+  /**
+   * @param mixed $cancelUrl
+   */
+  public function setCancelUrl($cancelUrl)
+  {
+    $this->cancelUrl = $cancelUrl;
     return $this;
   }
 
@@ -117,6 +148,9 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
           'numberOfPayments' => '1',
           'email' => $this->email,
           'description' => $this->description,
+          'successUrl' => $this->successUrl,
+          'errorUrl' => $this->errorUrl,
+          'cancelUrl' => $this->cancelUrl
         )
       )
     );

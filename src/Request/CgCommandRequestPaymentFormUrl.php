@@ -1,6 +1,10 @@
 <?php
+
+namespace Dofinity\Creditguard\Request;
+
 class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 {
+
   protected $email;
   protected $description;
   protected $total;

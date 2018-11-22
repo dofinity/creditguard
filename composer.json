@@ -24,12 +24,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Creditguard\\": "src/Creditguard"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Creditguard\\": "test/Creditguard"
+            "Dofinity\\Creditguard\\": "src/",
+            "Dofinity\\Creditguard\\wsdl\\": "wsdl/"
         }
     },
     "scripts": {

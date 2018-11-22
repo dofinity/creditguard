@@ -24,14 +24,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Dofinity\\Creditguard\\": "src/",
-            "Dofinity\\Creditguard\\wsdl\\": "wsdl/"
+            "Creditguard\\": "src/Creditguard"
         }
-    },
-    "scripts": {
-        "test": [
-            "@phpunit"
-        ],
-        "phpunit": "phpunit --whitelist src ./test"
     }
 }

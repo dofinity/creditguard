@@ -1,6 +1,6 @@
 <?php
 
-namespace Dofinity\Creditguard\Request;
+namespace Creditguard;
 
 class CgCommandRequest
 {

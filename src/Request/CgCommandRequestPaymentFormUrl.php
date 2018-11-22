@@ -1,5 +1,5 @@
 <?php
-class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
+class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 {
   protected $email;
   protected $description;
@@ -14,7 +14,7 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
   protected $doDealResponse;
 
   /**
-   * AshraitTransactionFactoryDoDeal constructor.
+   * CgCommandRequestPaymentFormUrl constructor.
    * @param $user
    * @param $password
    * @param $terminalNumber
@@ -90,12 +90,12 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
    * @return SimpleXMLElement
    */
   public function execute() {
-    $this->makeDataArray();
-    $this->generateXml($this->data, $this->xml_data);
-    $int_id = $this->getIntId();
+    $requestData = $this
+      ->prepareRequestData()
+      ->buildRequestData();
 
-    $ashrait = new ashraitTransaction($this->user, $this->password, $int_id);
     $rs = new RelayService();
+    $ashrait = new ashraitTransaction($this->user, $this->password, $requestData);
     $result = new ashraitTransactionResponse($rs->ashraitTransaction($ashrait));
 
     // We are calling getAshraitTransactionReturn() twice becuase CG returns object in an object for some reason
@@ -107,10 +107,10 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
   }
 
   /**
-   * Extract redirect url from response
+   * Extract form url from response
    * @return url
    */
-  public function getRedirectUrl() {
+  public function getPaymentFormUrl() {
     return $this->doDealResponse->response->doDeal->mpiHostedPageUrl;
   }
 
@@ -118,7 +118,7 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
    * Extract token from response
    * @return url
    */
-  public function getToken() {
+  public function getPaymentFormToken() {
     return $this->doDealResponse->response->doDeal->token;
   }
 
@@ -126,8 +126,8 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
    * Creating the data array
    * @return $this
    */
-  protected function makeDataArray() {
-    $this->data = array(
+  protected function prepareRequestData() {
+    $this->rawData = array(
       'request' => array(
         'version' => $this->version,
         'language' => $this->language,
@@ -157,6 +157,5 @@ class AshraitTransactionFactoryDoDeal extends AshraitTransactionFactory
 
     return $this;
   }
-
 
 }

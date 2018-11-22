@@ -3,8 +3,8 @@
 function autoload_6a101e3147b9c1451852dd8e76201236($class)
 {
     $classes = array(
-      'AshraitTransactionFactory' => __DIR__ . '/Factory/AshraitTransactionFactory.php',
-      'AshraitTransactionFactoryDoDeal' => __DIR__ . '/Factory/AshraitTransactionFactoryDoDeal.php'
+      'CgCommandRequest' => __DIR__ . '/Request/CgCommandRequest.php',
+      'CgCommandRequestPaymentFormUrl' => __DIR__ . '/Request/CgCommandRequestPaymentFormUrl.php'
     );
     if (!empty($classes[$class])) {
         include $classes[$class];

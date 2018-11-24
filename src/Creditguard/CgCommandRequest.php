@@ -14,6 +14,7 @@ class CgCommandRequest
   protected $password;
   protected $mid;
   protected $terminalNumber;
+  protected $relayUrl;
 
   /**
    * Default parameters values;
@@ -25,12 +26,14 @@ class CgCommandRequest
 
   /**
    * CgCommandRequest constructor.
+   * @param $relayUrl
    * @param $user
    * @param $password
    * @param $terminalNumber
    * @param $mid
    */
-  public function __construct($user, $password, $terminalNumber, $mid) {
+  public function __construct($relayUrl, $user, $password, $terminalNumber, $mid) {
+    $this->relayUrl = $relayUrl;
     $this->user = $user;
     $this->password = $password;
     $this->terminalNumber = $terminalNumber;

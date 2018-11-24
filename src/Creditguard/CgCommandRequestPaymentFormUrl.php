@@ -2,6 +2,10 @@
 
 namespace Creditguard;
 
+use Creditguard\Wsdl\ashraitTransaction;
+use Creditguard\Wsdl\ashraitTransactionResponse;
+use Creditguard\Wsdl\RelayService;
+
 class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 {
 
@@ -19,16 +23,14 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 
   /**
    * CgCommandRequestPaymentFormUrl constructor.
+   * @param $relayUrl
    * @param $user
    * @param $password
    * @param $terminalNumber
    * @param $mid
-   * @param $total
-   * @param $email
-   * @param $description
    */
-  public function __construct($user, $password, $terminalNumber, $mid) {
-    parent::__construct($user, $password, $terminalNumber, $mid);
+  public function __construct($relayUrl, $user, $password, $terminalNumber, $mid) {
+    parent::__construct($relayUrl, $user, $password, $terminalNumber, $mid);
     $this->command = 'doDeal';
     $this->uniqueid = uniqid();
 
@@ -91,18 +93,19 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 
   /**
    * Execute command with the data and fetch result
-   * @return SimpleXMLElement
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl
    */
   public function execute() {
     $requestData = $this
       ->prepareRequestData()
       ->buildRequestData();
 
-    $rs = new RelayService();
+    $rs = new RelayService([], $this->relayUrl);
     $ashrait = new ashraitTransaction($this->user, $this->password, $requestData);
-    $result = new ashraitTransactionResponse($rs->ashraitTransaction($ashrait));
+    $ashraitTransaction = $rs->ashraitTransaction($ashrait);
+    $result = new ashraitTransactionResponse($ashraitTransaction);
 
-    // We are calling getAshraitTransactionReturn() twice becuase CG returns object in an object for some reason
+    // We are calling getAshraitTransactionReturn() twice because CG returns object in an object for some reason
     $raw_result = $result->getAshraitTransactionReturn()->getAshraitTransactionReturn();
     $raw_result = mb_convert_encoding($raw_result, 'ISO-8859-8', 'UTF-8');
     $this->doDealResponse = simplexml_load_string($raw_result);

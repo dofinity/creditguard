@@ -1,5 +1,7 @@
 <?php
 
+namespace Creditguard\Wsdl;
+
 class ashraitTransaction
 {
 

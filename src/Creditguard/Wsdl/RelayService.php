@@ -1,5 +1,7 @@
 <?php
 
+namespace Creditguard\Wsdl;
+
 class RelayService extends \SoapClient
 {
 
@@ -17,11 +19,12 @@ class RelayService extends \SoapClient
      */
     public function __construct(array $options = array(), $wsdl = null)
     {
-      foreach (self::$classmap as $key => $value) {
-        if (!isset($options['classmap'][$key])) {
-          $options['classmap'][$key] = $value;
-        }
-      }
+// Not needed due to our namespaces
+//      foreach (self::$classmap as $key => $value) {
+//        if (!isset($options['classmap'][$key])) {
+//          $options['classmap'][$key] = $value;
+//        }
+//      }
       $options = array_merge(array (
       'features' => 1,
     ), $options);

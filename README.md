@@ -8,11 +8,13 @@ A lightweight PHP helper library for integrating CreditGuard API payments.
 ```shell
 $ composer require dofinity/creditguard:dev-master
 ```
-### Copy the provided `/wsdl_template` files to `/wdsl`
-Change wdsl url in `/wsdl/RelayService.php` line 29
+### Using custom WSDL (customized API from CreditGuard)
+At the moment in order to use custom classes, you have two options:
+1. Export your changes as patch and apply that on the library (not recommended)
+2. Fork the repository and apply your custom WSDL
 
-### Generating CG Classes via WSDL
-For now the library comes with a pre-generated CG classes, generated from our demo endpoint.
+##### Generating CG Classes via WSDL
+As mentioned above, the library comes with a pre-generated CG classes, generated from our demo endpoint.
 If your terminal provides a different classes that are customized for your specific needs, you will to generate the classes again
 using `wsdl2phpgenerator` which is already defined as a dev dependency under our composer.json.
 

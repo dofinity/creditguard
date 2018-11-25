@@ -103,10 +103,11 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
     $rs = new RelayService([], $this->relayUrl);
     $ashrait = new ashraitTransaction($this->user, $this->password, $requestData);
     $ashraitTransaction = $rs->ashraitTransaction($ashrait);
-    $result = new ashraitTransactionResponse($ashraitTransaction);
+    $transactionResponse = new ashraitTransactionResponse($ashraitTransaction);
 
-    // We are calling getAshraitTransactionReturn() twice because CG returns object in an object for some reason
-    $raw_result = $result->getAshraitTransactionReturn()->getAshraitTransactionReturn();
+    $ashraitTransactionReturn = $transactionResponse->getAshraitTransactionReturn();
+    // getAshraitTransactionReturn returns an object for some reason
+    $raw_result = $ashraitTransactionReturn->ashraitTransactionReturn;
     $raw_result = mb_convert_encoding($raw_result, 'ISO-8859-8', 'UTF-8');
     $this->doDealResponse = simplexml_load_string($raw_result);
 
@@ -118,7 +119,7 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
    * @return url
    */
   public function getPaymentFormUrl() {
-    return $this->doDealResponse->response->doDeal->mpiHostedPageUrl;
+    return $this->doDealResponse->response->doDeal->mpiHostedPageUrl->__toString();
   }
 
   /**

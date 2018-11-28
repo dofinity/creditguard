@@ -153,7 +153,6 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
           'mid' => $this->mid,
           'uniqueid' => $this->uniqueid,
           'mpiValidation' => 'autoComm',
-          'numberOfPayments' => '1',
           'email' => $this->email,
           'description' => $this->description,
           'successUrl' => $this->successUrl,

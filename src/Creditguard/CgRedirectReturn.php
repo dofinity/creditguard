@@ -37,6 +37,7 @@ class CgRedirectReturn {
   }
 
   /**
+   * Shva code
    * @return string
    */
   public function getErrorCode() {
@@ -77,6 +78,17 @@ class CgRedirectReturn {
    */
   public function getLastDigits() {
     return $this->isParamValid('cardMask') ? substr($this->cardMask, -4) : FALSE;
+  }
+
+  /**
+   * Is successful code or not.
+   * Error code '000' is the success code and '179' / '-80' are duplicate
+   * transaction codes which also means success.
+   *
+   * @return bool
+   */
+  public function isSuccessCode() {
+    return in_array($this->getErrorCode(), ['000', '179', '-80']);
   }
 
   /**

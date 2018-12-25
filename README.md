@@ -78,3 +78,4 @@ $transaction = new \Creditguard\CreditguardTransaction(
 // use properties from src/Creditguard/CreditguardTransaction.php class
 var_dump($transaction);
 ```
+ 

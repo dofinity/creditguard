@@ -123,7 +123,7 @@ class CgRedirectReturn {
     // Check for required fields
     foreach ($this->getRequiredParamNames() as $required_field) {
       if (empty($this->{$required_field})) {
-        $this->validation_errors[$required_field] = "Required field is missing $this->{$required_field} query parameter";
+        $this->validation_errors[$required_field] = "Required field is missing $required_field query parameter";
       }
     }
 
@@ -131,7 +131,7 @@ class CgRedirectReturn {
     foreach ($this->getNumericParamNames() as $numeric_param_name) {
       $value = $this->{$numeric_param_name};
       if (!empty($value) && !is_numeric($value)) {
-        $this->validation_errors[$numeric_param_name] = "Illegal value in $this->{$numeric_param_name} query parameter";
+        $this->validation_errors[$numeric_param_name] = "Illegal value in $numeric_param_name query parameter";
       }
     }
 

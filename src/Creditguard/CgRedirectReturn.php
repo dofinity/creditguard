@@ -13,6 +13,7 @@ class CgRedirectReturn {
   protected $errorCode;
   protected $txId;
   protected $cardExp;
+  protected $cardToken;
   protected $authNumber;
   protected $cardMask;
   protected $errorText;
@@ -28,6 +29,7 @@ class CgRedirectReturn {
     // Init the main parameters
     $this->errorCode = !empty($_GET['ErrorCode']) ? $_GET['ErrorCode'] : '000';
     $this->txId = !empty($_GET['txId']) ? $_GET['txId'] : NULL;
+    $this->cardToken = !empty($_GET['cardToken']) ? $_GET['cardToken'] : NULL;
     $this->cardExp = !empty($_GET['cardExp']) ? $_GET['cardExp'] : NULL;
     $this->authNumber = !empty($_GET['authNumber']) ? $_GET['authNumber'] : NULL;
     $this->cardMask = !empty($_GET['cardMask']) ? $_GET['cardMask'] : NULL;
@@ -49,6 +51,13 @@ class CgRedirectReturn {
    */
   public function getTxId() {
     return $this->isParamValid('txId') ? $this->txId : FALSE;
+  }
+
+  /**
+   * @return null
+   */
+  public function getCardToken() {
+    return $this->isParamValid('cardToken') ? $this->cardToken : FALSE;
   }
 
   /**
@@ -153,6 +162,7 @@ class CgRedirectReturn {
     return [
       'txId',
       'cardMask',
+      'cardToken',
       'cardExp'
     ];
   }
@@ -163,6 +173,7 @@ class CgRedirectReturn {
   private function getNumericParamNames() {
     return [
       'errorCode',
+      'cardToken',
       'cardExp',
       'authNumber'
     ];

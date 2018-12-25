@@ -6,6 +6,11 @@ use Creditguard\Wsdl\ashraitTransaction;
 use Creditguard\Wsdl\ashraitTransactionResponse;
 use Creditguard\Wsdl\RelayService;
 
+/**
+ * Class CgCommandRequestChargeToken
+ *
+ * @package Creditguard
+ */
 class CgCommandRequestChargeToken extends CgCommandRequest
 {
 
@@ -14,7 +19,6 @@ class CgCommandRequestChargeToken extends CgCommandRequest
   protected $cardToken;
   protected $cardExp;
   protected $txId;
-
 
   protected $successUrl = "";
   protected $errorUrl = "";
@@ -110,13 +114,13 @@ class CgCommandRequestChargeToken extends CgCommandRequest
    * @return $this
    */
   protected function prepareRequestData() {
-    $this->rawData = array(
-      'request' => array(
+    $this->rawData = [
+      'request' => [
         'version' => $this->version,
         'language' => $this->language,
         'dateTime' => $this->dateTime,
         'command' => $this->command,
-        $this->command => array(
+        $this->command => [
           'terminalNumber' => $this->terminalNumber,
           'cardNo' => $this->cardToken,
           'cardExpiration' => $this->cardExp,
@@ -129,9 +133,9 @@ class CgCommandRequestChargeToken extends CgCommandRequest
           'mid' => $this->mid,
           'uniqueid' => $this->uniqueid,
           'mpiValidation' => 'Token'
-        )
-      )
-    );
+        ]
+      ]
+    ];
 
     return $this;
   }

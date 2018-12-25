@@ -6,6 +6,11 @@ use Creditguard\Wsdl\ashraitTransaction;
 use Creditguard\Wsdl\ashraitTransactionResponse;
 use Creditguard\Wsdl\RelayService;
 
+/**
+ * Class CgCommandRequestPaymentFormUrl
+ *
+ * @package Creditguard
+ */
 class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 {
 
@@ -135,13 +140,13 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
    * @return $this
    */
   protected function prepareRequestData() {
-    $this->rawData = array(
-      'request' => array(
+    $this->rawData = [
+      'request' => [
         'version' => $this->version,
         'language' => $this->language,
         'dateTime' => $this->dateTime,
         'command' => $this->command,
-        $this->command => array(
+        $this->command => [
           'terminalNumber' => $this->terminalNumber,
           'cardNo' => 'CGMPI',
           'creditType' => 'RegularCredit',
@@ -158,9 +163,9 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
           'successUrl' => $this->successUrl,
           'errorUrl' => $this->errorUrl,
           'cancelUrl' => $this->cancelUrl
-        )
-      )
-    );
+        ]
+      ]
+    ];
 
     return $this;
   }

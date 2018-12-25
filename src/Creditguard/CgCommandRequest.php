@@ -2,6 +2,11 @@
 
 namespace Creditguard;
 
+/**
+ * Class CgCommandRequest
+ *
+ * @package Creditguard
+ */
 class CgCommandRequest
 {
 

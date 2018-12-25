@@ -13,7 +13,7 @@ class CgRedirectReturn {
   protected $errorCode;
   protected $txId;
   protected $cardExp;
-  protected $authNum;
+  protected $authNumber;
   protected $cardMask;
   protected $errorText;
 
@@ -29,7 +29,7 @@ class CgRedirectReturn {
     $this->errorCode = !empty($_GET['ErrorCode']) ? $_GET['ErrorCode'] : '000';
     $this->txId = !empty($_GET['txId']) ? $_GET['txId'] : NULL;
     $this->cardExp = !empty($_GET['cardExp']) ? $_GET['cardExp'] : NULL;
-    $this->authNum = !empty($_GET['authNumber']) ? $_GET['authNumber'] : NULL;
+    $this->authNumber = !empty($_GET['authNumber']) ? $_GET['authNumber'] : NULL;
     $this->cardMask = !empty($_GET['cardMask']) ? $_GET['cardMask'] : NULL;
     $this->errorText = !empty($_GET['ErrorText']) ? htmlspecialchars($_GET['ErrorText'], ENT_QUOTES, 'UTF-8') : '';
 
@@ -61,8 +61,8 @@ class CgRedirectReturn {
   /**
    * @return string
    */
-  public function getAuthNum() {
-    return $this->isParamValid('authNum') ?  $this->authNum : FALSE;
+  public function getAuthNumber() {
+    return $this->isParamValid('authNumber') ?  $this->authNumber : FALSE;
   }
 
   /**

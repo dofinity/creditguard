@@ -24,8 +24,6 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 
   protected $uniqueid;
 
-  protected $doDealResponse;
-
   /**
    * CgCommandRequestPaymentFormUrl constructor.
    * @param $relayUrl

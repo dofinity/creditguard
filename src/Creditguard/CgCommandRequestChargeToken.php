@@ -26,8 +26,6 @@ class CgCommandRequestChargeToken extends CgCommandRequest
 
   protected $uniqueid;
 
-  protected $doDealResponse;
-
   /**
    * CgCommandRequestPaymentFormUrl constructor.
    * @param $relayUrl
@@ -65,6 +63,19 @@ class CgCommandRequestChargeToken extends CgCommandRequest
     $this->doDealResponse = simplexml_load_string($raw_result);
 
     return $this;
+  }
+
+  /**
+   * Is successful code or not.
+   * Error code '000' is the success code and '179' are duplicate
+   * transaction codes which also means success.
+   * @todo Move to a utility class and replace here and on CgRedirectReturn
+   *
+   * @return bool
+   */
+  public function isSuccessCode() {
+    $code = !empty($this->doDealResponse->response->result) ? $this->doDealResponse->response->result : FALSE;
+    return in_array($code, ['000', '179']);
   }
 
   /**

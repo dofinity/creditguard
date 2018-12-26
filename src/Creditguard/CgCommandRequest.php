@@ -4,6 +4,7 @@ namespace Creditguard;
 
 /**
  * Class CgCommandRequest
+ * @todo Implement CgRequestInterface
  *
  * @package Creditguard
  */
@@ -29,6 +30,8 @@ class CgCommandRequest
   protected $dateTime;
   protected $command;
 
+  protected $doDealResponse;
+
   /**
    * CgCommandRequest constructor.
    * @param $relayUrl
@@ -45,6 +48,13 @@ class CgCommandRequest
     $this->mid = $mid;
 
     $this->dateTime = date("d/m/Y H:i:s");
+  }
+
+  /**
+   * @return array
+   */
+  public function getResponse() {
+    return !empty($this->doDealResponse->response) ? $this->doDealResponse->response : [];
   }
 
   /**

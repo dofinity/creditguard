@@ -59,8 +59,8 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest {
    * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
   public function setDescription($description) {
-    // Filter
-    $allowed_pattern = "/[^a-zA-Z0-9_:\- ]/";
+    // Filter all illegal chars as described on CG's errors
+    $allowed_pattern = "/[^a-zA-Zא-תF0-9_:\- ]/";
     $this->description = preg_replace($allowed_pattern, "", $description);
     return $this;
   }

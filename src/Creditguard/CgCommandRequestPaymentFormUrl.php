@@ -2,124 +2,113 @@
 
 namespace Creditguard;
 
-use Creditguard\Wsdl\ashraitTransaction;
-use Creditguard\Wsdl\ashraitTransactionResponse;
-use Creditguard\Wsdl\RelayService;
-
 /**
  * Class CgCommandRequestPaymentFormUrl
  *
  * @package Creditguard
  */
-class CgCommandRequestPaymentFormUrl extends CgCommandRequest
-{
+class CgCommandRequestPaymentFormUrl extends CgCommandRequest {
 
   protected $email;
+
   protected $description;
+
   protected $total;
 
   protected $successUrl = "";
+
   protected $errorUrl = "";
+
   protected $cancelUrl = "";
 
   protected $uniqueid;
 
   /**
    * CgCommandRequestPaymentFormUrl constructor.
+   *
    * @param $relayUrl
    * @param $user
    * @param $password
    * @param $terminalNumber
    * @param $mid
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
   public function __construct($relayUrl, $user, $password, $terminalNumber, $mid) {
     parent::__construct($relayUrl, $user, $password, $terminalNumber, $mid);
     $this->command = 'doDeal';
-    $this->uniqueid = uniqid();
 
     return $this;
   }
 
   /**
    * @param mixed $email
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
-  public function setEmail($email)
-  {
+  public function setEmail($email) {
     $this->email = $email;
     return $this;
   }
 
   /**
-   * @param mixed $description
+   * @param string $description
+   *   Should be in the values range of 0-9, a-z, A-Z and special charecters
+   *   like: _ - : and space
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
-  public function setDescription($description)
-  {
-    $this->description = $description;
+  public function setDescription($description) {
+    // Filter
+    $allowed_pattern = "/[^a-zA-Z0-9_:\- ]/";
+    $this->description = preg_replace($allowed_pattern, "", $description);
     return $this;
   }
 
   /**
-   * @param mixed $total
+   * @param float $total
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
-  public function setTotal($total)
-  {
+  public function setTotal($total) {
     $this->total = $total;
     return $this;
   }
 
   /**
-   * @param mixed $successUrl
+   * @param string $successUrl
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
-  public function setSuccessUrl($successUrl)
-  {
+  public function setSuccessUrl($successUrl) {
     $this->successUrl = $successUrl;
     return $this;
   }
 
   /**
-   * @param mixed $errorUrl
+   * @param string $errorUrl
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
-  public function setErrorUrl($errorUrl)
-  {
+  public function setErrorUrl($errorUrl) {
     $this->errorUrl = $errorUrl;
     return $this;
   }
 
   /**
-   * @param mixed $cancelUrl
+   * @param string $cancelUrl
+   *
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
-  public function setCancelUrl($cancelUrl)
-  {
+  public function setCancelUrl($cancelUrl) {
     $this->cancelUrl = $cancelUrl;
     return $this;
   }
 
   /**
-   * Execute command with the data and fetch result
-   * @return \Creditguard\CgCommandRequestPaymentFormUrl
-   */
-  public function execute() {
-    $requestData = $this
-      ->prepareRequestData()
-      ->buildRequestData();
-
-    $rs = new RelayService([], $this->relayUrl);
-    $ashrait = new ashraitTransaction($this->user, $this->password, $requestData);
-    $ashraitTransaction = $rs->ashraitTransaction($ashrait);
-    $transactionResponse = new ashraitTransactionResponse($ashraitTransaction);
-
-    $ashraitTransactionReturn = $transactionResponse->getAshraitTransactionReturn();
-    // getAshraitTransactionReturn returns an object for some reason
-    $raw_result = $ashraitTransactionReturn->ashraitTransactionReturn;
-    $raw_result = mb_convert_encoding($raw_result, 'ISO-8859-8', 'UTF-8');
-    $this->doDealResponse = simplexml_load_string($raw_result);
-
-    return $this;
-  }
-
-  /**
    * Extract form url from response
-   * @return url
+   *
+   * @return string
    */
   public function getPaymentFormUrl() {
     return $this->doDealResponse->response->doDeal->mpiHostedPageUrl->__toString();
@@ -127,7 +116,8 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 
   /**
    * Extract token from response
-   * @return url
+   *
+   * @return string
    */
   public function getPaymentFormToken() {
     return $this->doDealResponse->response->doDeal->token;
@@ -135,7 +125,9 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
 
   /**
    * Creating the data array
-   * @return $this
+   *
+   * @todo Generalize and move parts to CgCommandRequest
+   * @return \Creditguard\CgCommandRequestPaymentFormUrl $this
    */
   protected function prepareRequestData() {
     $this->rawData = [
@@ -160,9 +152,9 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest
           'description' => $this->description,
           'successUrl' => $this->successUrl,
           'errorUrl' => $this->errorUrl,
-          'cancelUrl' => $this->cancelUrl
-        ]
-      ]
+          'cancelUrl' => $this->cancelUrl,
+        ],
+      ],
     ];
 
     return $this;

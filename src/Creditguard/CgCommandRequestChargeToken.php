@@ -2,10 +2,6 @@
 
 namespace Creditguard;
 
-use Creditguard\Wsdl\ashraitTransaction;
-use Creditguard\Wsdl\ashraitTransactionResponse;
-use Creditguard\Wsdl\RelayService;
-
 /**
  * Class CgCommandRequestChargeToken
  *
@@ -37,30 +33,6 @@ class CgCommandRequestChargeToken extends CgCommandRequest
   public function __construct($relayUrl, $user, $password, $terminalNumber, $mid) {
     parent::__construct($relayUrl, $user, $password, $terminalNumber, $mid);
     $this->command = 'doDeal';
-    $this->uniqueid = uniqid();
-
-    return $this;
-  }
-
-  /**
-   * Execute command with the data and fetch result
-   * @return \Creditguard\CgCommandRequestPaymentFormUrl
-   */
-  public function execute() {
-    $requestData = $this
-      ->prepareRequestData()
-      ->buildRequestData();
-
-    $rs = new RelayService([], $this->relayUrl);
-    $ashrait = new ashraitTransaction($this->user, $this->password, $requestData);
-    $ashraitTransaction = $rs->ashraitTransaction($ashrait);
-    $transactionResponse = new ashraitTransactionResponse($ashraitTransaction);
-
-    $ashraitTransactionReturn = $transactionResponse->getAshraitTransactionReturn();
-    // getAshraitTransactionReturn returns an object for some reason
-    $raw_result = $ashraitTransactionReturn->ashraitTransactionReturn;
-    $raw_result = mb_convert_encoding($raw_result, 'ISO-8859-8', 'UTF-8');
-    $this->doDealResponse = simplexml_load_string($raw_result);
 
     return $this;
   }
@@ -122,6 +94,7 @@ class CgCommandRequestChargeToken extends CgCommandRequest
 
   /**
    * Creating the data array
+   * @todo Generalize and move parts to CgCommandRequest
    * @return $this
    */
   protected function prepareRequestData() {
@@ -147,6 +120,11 @@ class CgCommandRequestChargeToken extends CgCommandRequest
         ]
       ]
     ];
+
+    // Add the extraData to the request in case it exists
+    if (isset($this->extraData) && is_array($this->extraData)) {
+      $this->rawData['request'][$this->command] += $this->extraData;
+    }
 
     return $this;
   }

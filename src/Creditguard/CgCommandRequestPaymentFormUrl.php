@@ -157,6 +157,11 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest {
       ],
     ];
 
+    // Add the extraData to the request in case it exists
+    if (isset($this->extraData) && is_array($this->extraData)) {
+      $this->rawData['request'][$this->command] += $this->extraData;
+    }
+
     return $this;
   }
 

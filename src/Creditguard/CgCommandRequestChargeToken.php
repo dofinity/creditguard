@@ -113,10 +113,9 @@ class CgCommandRequestChargeToken extends CgCommandRequest
           'transactionCode' => 'Phone',
           'transactionType' => 'Debit',
           'total' => $this->total,
-          'validation' => 'TxnSetup',
+          'validation' => 'AutoComm',
           'mid' => $this->mid,
-          'uniqueid' => $this->uniqueid,
-          'mpiValidation' => 'Token'
+          'uniqueid' => $this->uniqueid
         ]
       ]
     ];

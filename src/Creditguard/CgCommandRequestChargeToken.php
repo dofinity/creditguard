@@ -106,15 +106,15 @@ class CgCommandRequestChargeToken extends CgCommandRequest
         'command' => $this->command,
         $this->command => [
           'terminalNumber' => $this->terminalNumber,
-          'cardNo' => $this->cardToken,
-          'cardExpiration' => $this->cardExp,
+          'total' => $this->total,
+          'transactionType' => 'Debit',
           'creditType' => 'RegularCredit',
           'currency' => 'ILS',
           'transactionCode' => 'Phone',
-          'transactionType' => 'Debit',
-          'total' => $this->total,
+          'cardId' => $this->cardToken,
           'validation' => 'AutoComm',
           'mid' => $this->mid,
+          'cardExpiration' => $this->cardExp,
           'uniqueid' => $this->uniqueid
         ]
       ]

@@ -50,6 +50,46 @@ class CgCommandRequestChargeToken extends CgCommandRequest
     return in_array($code, ['000', '179']);
   }
 
+    /**
+     * @param mixed $user
+     * @return CgCommandRequestChargeToken
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @param mixed $password
+     * @return CgCommandRequestChargeToken
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @param mixed $mid
+     * @return CgCommandRequestChargeToken
+     */
+    public function setMid($mid)
+    {
+        $this->mid = $mid;
+        return $this;
+    }
+
+    /**
+     * @param mixed $terminalNumber
+     * @return CgCommandRequestChargeToken
+     */
+    public function setTerminalNumber($terminalNumber)
+    {
+        $this->terminalNumber = $terminalNumber;
+        return $this;
+    }
+
   /**
    * @param mixed $total
    * @return CgCommandRequestChargeToken

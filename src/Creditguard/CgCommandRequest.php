@@ -85,6 +85,46 @@ class CgCommandRequest
   }
 
   /**
+   * @param mixed $user
+   *
+   * @return CgCommandRequest
+   */
+  public function setUser($user) {
+    $this->user = $user;
+    return $this;
+  }
+
+  /**
+   * @param mixed $password
+   *
+   * @return CgCommandRequest
+   */
+  public function setPassword($password) {
+    $this->password = $password;
+    return $this;
+  }
+
+  /**
+   * @param mixed $mid
+   *
+   * @return CgCommandRequest
+   */
+  public function setMid($mid) {
+    $this->mid = $mid;
+    return $this;
+  }
+
+  /**
+   * @param mixed $terminalNumber
+   *
+   * @return CgCommandRequest
+   */
+  public function setTerminalNumber($terminalNumber) {
+    $this->terminalNumber = $terminalNumber;
+    return $this;
+  }
+
+  /**
    * @param array $extraData
    *   Extra data to send to CG, should be an assoc array, e.g:
    *   [

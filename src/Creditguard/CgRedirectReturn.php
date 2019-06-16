@@ -17,6 +17,7 @@ class CgRedirectReturn {
   protected $authNumber;
   protected $cardMask;
   protected $errorText;
+  protected $personalId;
 
   protected $validation_errors;
 
@@ -26,7 +27,7 @@ class CgRedirectReturn {
    *   Associative array of all parameters received from CG
    */
   public function __construct($queryParams) {
-    // Init the main parameters
+    // Init the main parameters.
     $this->errorCode = !empty($_GET['ErrorCode']) ? $_GET['ErrorCode'] : '000';
     $this->txId = !empty($_GET['txId']) ? $_GET['txId'] : NULL;
     $this->cardToken = !empty($_GET['cardToken']) ? $_GET['cardToken'] : NULL;
@@ -34,6 +35,7 @@ class CgRedirectReturn {
     $this->authNumber = !empty($_GET['authNumber']) ? $_GET['authNumber'] : NULL;
     $this->cardMask = !empty($_GET['cardMask']) ? $_GET['cardMask'] : NULL;
     $this->errorText = !empty($_GET['ErrorText']) ? htmlspecialchars($_GET['ErrorText'], ENT_QUOTES, 'UTF-8') : '';
+    $this->personalId = !empty($_GET['personalId']) ? $_GET['personalId'] : '';
 
     $this->checkParamsValidity();
   }
@@ -87,6 +89,13 @@ class CgRedirectReturn {
    */
   public function getLastDigits() {
     return $this->isParamValid('cardMask') ? substr($this->cardMask, -4) : FALSE;
+  }
+
+  /**
+   * @return int|string
+   */
+  public function getPersonalId() {
+    return $this->personalId;
   }
 
   /**
@@ -152,6 +161,11 @@ class CgRedirectReturn {
     // Validate the transaction ID
     if (!preg_match('/^[a-zA-Z0-9\-]*$/', $this->txId)) {
       $this->validation_errors['txId'] = "Illegal value in txId query parameter";
+    }
+
+    // Validate the personal ID
+    if (!preg_match('/^[a-zA-Z0-9\-]*$/', $this->personalId)) {
+      $this->validation_errors['personalId'] = "Illegal value in personalId query parameter";
     }
   }
 

@@ -23,6 +23,12 @@ class CgCommandRequestChargeToken extends CgCommandRequest
   protected $uniqueid;
 
   /**
+   * @var string
+   *   The personal id of the customer.
+   */
+  protected $id;
+
+  /**
    * CgCommandRequestPaymentFormUrl constructor.
    * @param $relayUrl
    * @param $user
@@ -90,7 +96,16 @@ class CgCommandRequestChargeToken extends CgCommandRequest
     return $this;
   }
 
-
+  /**
+   * @param string $id
+   *   The personal id of the user (Teodat Zeot).
+   *
+   * @return CgCommandRequestPaymentFormUrl
+   */
+  public function setId($id) {
+    $this->id = $id;
+    return $this;
+  }
 
   /**
    * Creating the data array
@@ -115,7 +130,8 @@ class CgCommandRequestChargeToken extends CgCommandRequest
           'validation' => 'AutoComm',
           'mid' => $this->mid,
           'cardExpiration' => $this->cardExp,
-          'uniqueid' => $this->uniqueid
+          'uniqueid' => $this->uniqueid,
+          'id' => $this->id,
         ]
       ]
     ];

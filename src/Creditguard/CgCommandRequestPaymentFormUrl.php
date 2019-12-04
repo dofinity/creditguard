@@ -52,6 +52,13 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest {
   }
 
   /**
+   * @param string $language
+   */
+  public function setLanguage(string $language)  {
+    $this->language = $language;
+  }
+
+  /**
    * @param string $description
    *   Should be in the values range of 0-9, a-z, A-Z and special charecters
    *   like: _ - : and space

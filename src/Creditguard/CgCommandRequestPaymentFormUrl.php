@@ -131,6 +131,18 @@ class CgCommandRequestPaymentFormUrl extends CgCommandRequest {
   }
 
   /**
+   * @return mixed
+   */
+  public function getDoDealResult() {
+    return [
+      'resultCode' => $this->doDealResponse->response->result->__toString(),
+      'message' => $this->doDealResponse->response->message->__toString(),
+      'userMessage' => $this->doDealResponse->response->userMessage->__toString(),
+      'additionalInfo' => $this->doDealResponse->response->additionalInfo->__toString(),
+    ];
+  }
+
+  /**
    * Creating the data array
    *
    * @todo Generalize and move parts to CgCommandRequest

@@ -125,6 +125,23 @@ class CgCommandRequest
   }
 
   /**
+   * @return string
+   */
+  public function getVersion() {
+    return $this->version;
+  }
+
+  /**
+   * @param string $version
+   *
+   * @return CgCommandRequest
+   */
+  public function setVersion($version) {
+    $this->version = $version;
+    return $this;
+  }
+
+  /**
    * @param array $extraData
    *   Extra data to send to CG, should be an assoc array, e.g:
    *   [
